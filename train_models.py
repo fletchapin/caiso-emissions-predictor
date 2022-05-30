@@ -42,7 +42,7 @@ def create_model(input_data, design, dataset_train):
         dropout = keras.layers.Dropout(0.8)(inputs)
         gru_out = keras.layers.GRU(48, activation="tanh")(dropout)
         outputs = keras.layers.Dense(1)(gru_out)
-        
+
         model = keras.Model(inputs=inputs, outputs=outputs)
         model.compile(
           optimizer=keras.optimizers.Adam(learning_rate=0.001),
@@ -57,7 +57,7 @@ def create_model(input_data, design, dataset_train):
         dropout = keras.layers.Dropout(0.8)(inputs)
         lstm_out = keras.layers.LSTM(72, activation="tanh")(dropout)
         outputs = keras.layers.Dense(1)(lstm_out)
-        
+
         model = keras.Model(inputs=inputs, outputs=outputs)
         model.compile(
           optimizer=keras.optimizers.Adam(learning_rate=0.01),
@@ -71,24 +71,24 @@ def create_model(input_data, design, dataset_train):
 
 def select_input_data(input_data, weather_data):
     if weather_data == "all":
-        if input_data == "normalized":
-            df = pd.read_csv("merged_data_normalized_v2.csv").fillna(0)
+        if input_data == "demand_ratio":
+            df = pd.read_csv("data/merged_data_demand_ratio_v2.csv").fillna(0)
         elif input_data == "unnormalized":
-            df = pd.read_csv("merged_data_v2.csv").fillna(0)
+            df = pd.read_csv("data/merged_data_v2.csv").fillna(0)
     elif weather_data == "gilroy":
-        if input_data == "normalized":
-            df = pd.read_csv("merged_data_normalized.csv").fillna(0)
+        if input_data == "demand_ratio":
+            df = pd.read_csv("data/merged_data_demand_ratio.csv").fillna(0)
         elif input_data == "unnormalized":
-            df = pd.read_csv("merged_data.csv").fillna(0)
+            df = pd.read_csv("data/merged_data.csv").fillna(0)
     elif weather_data == "none":
-        if input_data == "normalized":
-            df = pd.read_csv("eia_data_normalized.csv").fillna(0)
+        if input_data == "demand_ratio":
+            df = pd.read_csv("data/eia_data_demand_ratio.csv").fillna(0)
         elif input_data == "unnormalized":
-            df = pd.read_csv("eia_data.csv").fillna(0)
+            df = pd.read_csv("data/eia_data.csv").fillna(0)
 
     return df
 
-input_types = ["normalized", "unnormalized"]
+input_types = ["demand_ratio", "unnormalized"]
 weather_types = ["all", "gilroy", "none"]
 designs = ["24-neuron LSTM", "48-neuron GRU", "72-layer LSTM"]
 
@@ -103,6 +103,7 @@ for i in range(len(input_types)):
                 features = df.drop([x for x in df.columns if "Soil Temp" in x], axis=1)
                 features["DateTime"] = pd.to_datetime(features["DateTime"])
                 features.set_index("DateTime", inplace=True)
+                # normalize data if it wasn't already pre-processed
                 if input_types[i] == "unnormalized":
                     features = normalize(features, dev_split_idx)
 

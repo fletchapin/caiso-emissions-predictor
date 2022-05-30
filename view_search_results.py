@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #############################################
 ########## Run 1 - Architecture #############
 #############################################
-arr = np.load("grid_search_architecture.npy")
+arr = np.load("data/grid_search_architecture.npy")
 
 learning_rate = [0.00001, 0.0001, 0.001, 0.01]
 num_neurons = [24, 48, 72, 96, 120, 144]
@@ -60,7 +60,7 @@ plt.show()
 #############################################
 ########## Run 2 - Regularization ###########
 #############################################
-arr = np.load("grid_search_reg.npy")
+arr = np.load("data/grid_search_reg.npy")
 
 reg_penalty = [0.00001, 0.0001, 0.001, 0.01]
 reg_method = ["L2", "L1", "Dropout"]
@@ -102,7 +102,7 @@ for k in range(len(architecture)):
 #############################################
 ######## Run 3 - Activation and Loss ########
 #############################################
-arr = np.load("grid_search_eval.npy")
+arr = np.load("data/grid_search_eval.npy")
 # set NaN to maximum so that these invalid architectures are ignored
 arr = np.nan_to_num(arr, nan=np.nanmax(arr))
 

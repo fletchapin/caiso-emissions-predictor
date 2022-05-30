@@ -118,7 +118,7 @@ for i in range(len(learning_rates)):
         inputs = keras.layers.Input(shape=(inputs.shape[1], inputs.shape[2]))
         gru_out = keras.layers.GRU(num_neurons[j])(inputs)
         outputs = keras.layers.Dense(1)(gru_out)
-      elif designs[k] == "GRU_attention": 
+      elif designs[k] == "GRU_attention":
         inputs = keras.layers.Input(shape=(inputs.shape[1], inputs.shape[2]))
         gru = keras.layers.GRU(num_neurons[j], return_sequences=True)(inputs)
         attention_layer = attention()(gru)
@@ -153,4 +153,4 @@ for i in range(len(learning_rates)):
       grid_search_results[i,j,k] = np.min(history.history["val_loss"])
 
 # np.savetxt("grid_search_architecture.csv", grid_search_results, delimiter=",")
-np.save("grid_search_architecture.npy", grid_search_results)
+np.save("data/grid_search_architecture.npy", grid_search_results)

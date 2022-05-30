@@ -149,4 +149,4 @@ for i in range(len(reg_penalty)):
       grid_search_results[i,j,k] = np.min(history.history["val_loss"])
 
 # np.savetxt("grid_search_architecture.csv", grid_search_results, delimiter=",")
-np.save("grid_search_reg.npy", grid_search_results)
+np.save("data/grid_search_reg.npy", grid_search_results)

@@ -140,5 +140,5 @@ for i in range(len(loss_func)):
       grid_search_eval_results[i,j,k] = np.min(history.history["rmse"])
 
 # np.savetxt("grid_search_architecture.csv", grid_search_results, delimiter=",")
-np.save("grid_search_val_loss.npy", grid_search_loss_results)
-np.save("grid_search_eval.npy", grid_search_eval_results)
+np.save("data/grid_search_val_loss.npy", grid_search_loss_results)
+np.save("data/grid_search_eval.npy", grid_search_eval_results)
